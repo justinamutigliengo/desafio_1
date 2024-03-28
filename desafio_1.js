@@ -13,16 +13,21 @@ class ProductManager {
       }
     }
 
-    ProductManager.id++;
-    this.products.push({
+    const newProduct = {
       title,
       description,
       price,
       thumbnail,
       code,
       stock,
-      id: ProductManager.id,
-    });
+    };
+
+    if (!Object.values(newProduct).includes(undefined)) {
+      ProductManager.id++;
+      this.products.push({ ...newProduct, id: ProductManager.id });
+    } else {
+      console.log("Todos los campos son requeridos");
+    }
   }
 
   getProducts() {
@@ -32,7 +37,7 @@ class ProductManager {
     if (!this.products.find((product) => product.id === id)) {
       console.log("Not Found");
     } else {
-      console.log("Existe");
+      console.log(this.products.find((product) => product.id === id));
     }
   }
 }
@@ -57,8 +62,7 @@ productManager.addProduct(
   "Descripción 2",
   2000,
   "imagen2.jpg",
-  "def456",
-  5
+  "def456"
 );
 
 // Segunda llamada = areglo con producto
@@ -78,4 +82,4 @@ productManager.addProduct(
 productManager.getProductById(2);
 
 // Busqueda de producto por ID no encontrado
-productManager.getProductById(4);
+productManager.getProductById(3);
